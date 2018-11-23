@@ -5,5 +5,13 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // software algorthm
+  // waiting for IR signal
+  // if IR signal the signal treatment
+
+  // software annex
+  // WIFI check
+  // MQTT check
+  // MQTT signal treatment
+  // MQTT info to send
 }
