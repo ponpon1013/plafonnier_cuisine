@@ -1,0 +1,133 @@
+html{
+  height: 100vh
+}
+
+.en_tete_et_pied{
+  background-color: rgb(10, 50, 79);
+  color: white;
+  font-family:cursive,Brush Script MT;
+  display: flex;
+  width:100%;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0;
+}
+body {
+  height: 80vh;
+}
+header {
+    font-size: 20;
+    font-weight: bold;
+    height: 10vh;
+
+}
+
+footer {
+  height: 20px;
+}
+.case {
+  flex:1;
+}
+.titre {
+  text-align: center;
+  flex: 20;
+}
+
+#wifi_info{
+  position:fixed;
+  top:5vh;
+  right:5vw;
+  display: none;
+  background-color:#47f263;
+  color: black;
+  font-size: 15px;
+  font-weight: normal;
+  border-radius: 6px;
+  border: none ;
+  height:35px;
+  text-align: left;
+}
+
+.infobulle:hover #wifi_info{
+  display: block;
+}
+
+.infobulle div p{
+  margin-left:5px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#wifi {
+  width:30px;
+}
+
+.svg-content{
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  vertical-align: 100%;
+  overflow: hidden;
+}
+
+.svg-content-menu{
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+}
+
+#wifi_config {
+  position:fixed;
+  top:13%;
+  left:30%;
+  border-color: rgb(10, 50, 79);
+  border-style: solid;
+  background-color: white;
+}
+
+#wifi_config select{
+  width: 100%;
+  font-size: 13px;
+}
+
+#wifi_config select::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgb(10, 50, 79);
+  background-color: white;
+}
+
+#wifi_config select::-webkit-scrollbar{
+  width:10px;
+  background-color: white;
+}
+
+#wifi_config select::-webkit-scrollbar-thumb{
+  background-color: rgb(10, 50, 79);
+  border:2px solid rgb(62, 77, 131);
+}
+
+.bouton-radio{
+  display:none;
+}
+
+label {
+  width: 100%;
+  display: block;
+  border:solid black;
+}
+
+label p{
+display: inline-block;
+  width:90%;
+  height: 20px;
+  line-height: 20px;
+  margin:0;
+}
+
+.bouton-radio:checked ~ label{
+   background-color: rgb(65, 161, 201);
+}
+.bouton-radio:hover ~ label{
+   background-color: rgb(65, 161, 201);
+}
