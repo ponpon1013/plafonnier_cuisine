@@ -84,7 +84,7 @@ footer {
   left:30%;
   border-color: rgb(10, 50, 79);
   border-style: solid;
-  background-color: white;
+  background-color: rgb(177, 210, 215);
 }
 
 #wifi_config select{
@@ -92,19 +92,32 @@ footer {
   font-size: 13px;
 }
 
-#wifi_config select::-webkit-scrollbar-track{
+#wifi_available::-webkit-scrollbar-track{
   -webkit-box-shadow: inset 0 0 6px rgb(10, 50, 79);
-  background-color: white;
+  background-color:white;
+  border-radius: 10px;
 }
 
-#wifi_config select::-webkit-scrollbar{
+#wifi_available::-webkit-scrollbar{
   width:10px;
   background-color: white;
+  border-radius: 10px;
 }
 
-#wifi_config select::-webkit-scrollbar-thumb{
+#wifi_available::-webkit-scrollbar-thumb{
   background-color: rgb(10, 50, 79);
   border:2px solid rgb(62, 77, 131);
+  border-radius: 10px;
+}
+
+#wifi_available{
+  height: 6em;
+  background-color: white;
+  margin:3px;
+  border-radius: 5px;
+  padding: 3px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .bouton-radio{
@@ -113,8 +126,8 @@ footer {
 
 label {
   width: 100%;
-  display: block;
-  border:solid black;
+  display: flex;
+  border-radius: 5px;
 }
 
 label p{
@@ -125,9 +138,10 @@ display: inline-block;
   margin:0;
 }
 
-.bouton-radio:checked ~ label{
+.bouton-radio:checked + .label-for-check {
    background-color: rgb(65, 161, 201);
 }
-.bouton-radio:hover ~ label{
+
+.label-for-check:hover {
    background-color: rgb(65, 161, 201);
 }
