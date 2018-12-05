@@ -5,13 +5,14 @@
 
 <head>
   <link rel="stylesheet" href="style.css">
+
 </head>
 <header class="en_tete_et_pied">
   <div class="case"></div>
   <div class="titre">Plafonnier</div>
   <div class="case infobulle">
     <div>
-      <svg version="1.1" viewBox="0 0 100 100" id="wifi" preserveAspectRation="xMinYMin meet" class="svg-content">
+      <svg version="1.1" viewBox="0 0 100 100" id="wifi_status" preserveAspectRation="xMinYMin meet" class="svg-content">
         <g fill="none" stroke-width="4px" stroke-linecap="round">
           <circle id="circle" cx="50" cy="50" r="40" stroke="#47f263" />
           <g transform="translate(0,5)">
@@ -162,9 +163,11 @@
   </p>
   <p>
     <input type="button" value="Send">
-    <input type="button" value="Cancel">
+    <input type="button" value="Cancel" onclick="closeWifiConfig();">
   </p>
 
 </div>
+
+<script src="script.js"></script>
 
 </HTML>

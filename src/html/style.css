@@ -79,6 +79,7 @@ footer {
 }
 
 #wifi_config {
+  display:none;
   position:fixed;
   top:13%;
   left:30%;
