@@ -22,6 +22,7 @@
 #include <FS.h>
 #include <ESP8266FtpServer.h>
 #include <WebSocketsServer.h>
+#include <ArduinoJson.h>
 
 //librairy for IR control
 #include <IRremoteESP8266.h>
@@ -42,39 +43,6 @@
 /*----------------------- debug mode--------------------- */
 #define DEBUG
 /*--------------------------------------------------------*/
-
-
-/*-------------WIFI declaration-----------*/
-#define AP_NAME "plafonnier"
-#define AP_PASSWD_DEFAULT "default"
-bool scanOn=false; //flag to say if WIFI scanning is ON or not
-int numScan=0; // number of wifi network found
-void prinScanResult(int networksFound){
-        if (numScan!=networksFound)
-        {
-                numScan=networksFound;
-                Serial.printf("%d network(s) found\n", networksFound);
-                for (int i = 0; i < networksFound; i++)
-                {
-                        #ifdef DEBUG
-                        Serial.printf("%d: %s, Ch:%d (%ddBm) %s\n", i + 1, WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i), WiFi.encryptionType(i) == ENC_TYPE_NONE ? "open" : "");
-                        #endif
-                }
-        }
-        scanOn=false;
-}
-void scanWifi(){
-        if (!scanOn)
-        {
-                WiFi.scanNetworksAsync(prinScanResult);
-                scanOn=true;
-        }
-}
-
-//Initialize Ticker every 0.5s
-bool WifiScanBool=false; // flag to start wifiscan
-Ticker WifiScan(scanWifi,TIME_WIFI_SCAN * 1000 );
-/*------------------------------------------------------*/
 
 /*-------------web server declaration-----------*/
 ESP8266WebServer server(80);
@@ -97,9 +65,62 @@ void startWebSocket() { // Start a WebSocket server
         Serial.println("WebSocket server started.");
   #endif
 }
-
-
 /*--------------------------------------------------------*/
+
+/*-------------WIFI declaration-----------*/
+#define AP_NAME "plafonnier"
+#define AP_PASSWD_DEFAULT "default"
+#define MAX_WIFI_SCAN 255
+bool scanOn=false; //flag to say if WIFI scanning is ON or not
+int numScan=0; // number of wifi network found
+void prinScanResult(int networksFound){
+        if (numScan!=networksFound){
+                const size_t bufferSize=
+                        JSON_ARRAY_SIZE(networksFound)+JSON_OBJECT_SIZE(1)
+                        +JSON_OBJECT_SIZE(2)+networksFound*JSON_OBJECT_SIZE(3);
+
+                numScan=networksFound;
+
+                DynamicJsonBuffer jsonBuffer(bufferSize);
+                JsonObject& root=jsonBuffer.createObject();
+                JsonObject& wifiscanJson=root.createNestedObject("WiFiScan");
+                wifiscanJson["number"]=numScan;
+
+                JsonArray& wifiScan_wifi=wifiscanJson.createNestedArray("wifi");
+
+                #ifdef DEBUG
+                Serial.printf("%d network(s) found\n", networksFound);
+                #endif
+                for (int i = 0; i < networksFound; i++)
+                {
+                        #ifdef DEBUG
+                        Serial.printf("%d: %s, Ch:%d (%ddBm) %s\n", i + 1, WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i), WiFi.encryptionType(i) == ENC_TYPE_NONE ? "open" : "");
+                        #endif
+                        JsonObject& wifiScan_wifi_i=wifiScan_wifi.createNestedObject();
+                        wifiScan_wifi_i["numero"]=i;
+                        wifiScan_wifi_i["name"]=WiFi.SSID(i).c_str();
+                        wifiScan_wifi_i["puissance"]=WiFi.RSSI(i);
+                }
+                String chaine;
+                root.printTo(chaine);
+                webSocket.broadcastTXT(chaine);
+        }
+        scanOn=false;
+}
+void scanWifi(){
+        if (!scanOn)
+        {
+                WiFi.scanNetworksAsync(prinScanResult);
+                scanOn=true;
+        }
+}
+
+//Initialize Ticker every 0.5s
+bool WifiScanBool=false; // flag to start wifiscan
+Ticker WifiScan(scanWifi,TIME_WIFI_SCAN * 1000 );
+/*------------------------------------------------------*/
+
+
 
 /*------------------ IR variable -------------------------*/
 IRrecv irrecv(PIN_RECV);//IRRecv object declaration
@@ -173,7 +194,7 @@ void loop() {
 /*-------------------------------------------------------------*/
 
 /*------------ resume wifi_scan ticker ------------------------*/
-      if (WifiScanBool) WifiScan.update();
+        if (WifiScanBool) WifiScan.update();
 /*-------------------------------------------------------------*/
 
 /*-----------------------WEBsocket treatment ------------------*/
@@ -190,9 +211,9 @@ void loop() {
 }
 
 void handleNotFound(){ // if the requested file or page doesn't exist, return a 404 not found error
-  if(!handleFileRead(server.uri())){          // check if the file exists in the flash memory (SPIFFS), if so, send it
-    server.send(404, "text/plain", "404: File Not Found");
-  }
+        if(!handleFileRead(server.uri())) {   // check if the file exists in the flash memory (SPIFFS), if so, send it
+                server.send(404, "text/plain", "404: File Not Found");
+        }
 }
 
 String getContentType(String filename) { // convert the file extension to the MIME type
@@ -222,24 +243,24 @@ bool handleFileRead(String path) { // send the right file to the client (if it e
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
-  switch (type) {
-    case WStype_DISCONNECTED:             // if the websocket is disconnected
+        switch (type) {
+        case WStype_DISCONNECTED:         // if the websocket is disconnected
       #ifdef DEBUG
-      Serial.printf("[%u] Disconnected!\n", num);
+                Serial.printf("[%u] Disconnected!\n", num);
       #endif
-      break;
-    case WStype_CONNECTED: {              // if a new websocket connection is established
-        IPAddress ip = webSocket.remoteIP(num);
+                break;
+        case WStype_CONNECTED: {          // if a new websocket connection is established
+                IPAddress ip = webSocket.remoteIP(num);
         #ifdef DEBUG
-        Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+                Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
         #endif
-                       // Turn rainbow off when a new connection is established
-      }
-      break;
-    case WStype_TEXT:                     // if new text data is received
+                // Turn rainbow off when a new connection is established
+        }
+        break;
+        case WStype_TEXT:                 // if new text data is received
       #ifdef DEBUG
-      Serial.printf("[%u] get Text: %s\n", num, payload);
+                Serial.printf("[%u] get Text: %s\n", num, payload);
       #endif
-      break;
-  }
+                break;
+        }
 }
