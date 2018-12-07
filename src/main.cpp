@@ -74,7 +74,7 @@ void startWebSocket() { // Start a WebSocket server
 bool scanOn=false; //flag to say if WIFI scanning is ON or not
 int numScan=0; // number of wifi network found
 void prinScanResult(int networksFound){
-        if (numScan!=networksFound){
+        if (numScan!=networksFound) {
                 const size_t bufferSize=
                         JSON_ARRAY_SIZE(networksFound)+JSON_OBJECT_SIZE(1)
                         +JSON_OBJECT_SIZE(2)+networksFound*JSON_OBJECT_SIZE(3);
@@ -119,8 +119,6 @@ void scanWifi(){
 bool WifiScanBool=false; // flag to start wifiscan
 Ticker WifiScan(scanWifi,TIME_WIFI_SCAN * 1000 );
 /*------------------------------------------------------*/
-
-
 
 /*------------------ IR variable -------------------------*/
 IRrecv irrecv(PIN_RECV);//IRRecv object declaration
@@ -258,9 +256,10 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         }
         break;
         case WStype_TEXT:                 // if new text data is received
-      #ifdef DEBUG
+                #ifdef DEBUG
                 Serial.printf("[%u] get Text: %s\n", num, payload);
-      #endif
+                #endif
+                
                 break;
         }
 }
