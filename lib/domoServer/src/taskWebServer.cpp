@@ -56,7 +56,9 @@ bool taskWebServer::Callback() {
   return true;
 }
 
-taskWebServer::taskWebServer(unsigned long aInterval,long aIterations,Scheduler* aS) :  Task(aInterval, aIterations, aS, false){
+taskWebServer::taskWebServer(unsigned long aInterval,long aIterations,Scheduler* aS,const char* name) :
+  Task(aInterval, aIterations, aS,false),
+  taskInfo(name){
   // Start a HTTP server with a file read handler and an upload handler
   // if someone requests any other file or page, go to function 'handleNotFound'
   // and check if the file exists

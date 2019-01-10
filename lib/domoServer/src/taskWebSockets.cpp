@@ -31,14 +31,31 @@ void taskWebSockets::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payloa
            break;
 
          case WStype_TEXT:                 // if new text data is received
-          #ifdef DEBUG_NICO
+          /*#ifdef DEBUG_NICO
           Serial.printf("[%u] get Text: %s\n", num, payload);
-          #endif
+          int i;
+          Serial.print("hex:");
+          for (i=0;i<lenght;i++){
+          Serial.printf("%x ",payload[i]);
+          }
+          Serial.println();
+          #endif*/
+          m_jsonTask->addJson(String((char *)payload));
+          /*DynamicJsonBuffer jsonBuffer(JSON_CAPACITY);// allocate JSOn buffer
+          JsonObject& root=jsonBuffer.parseObject(payload);
+          if (!root.success()){
+            #ifdef DEBUG_NICO
+            Serial.println("json parsing failed!");
+            #endif
+          }*/
           break;
          }
     }
 
-taskWebSockets::taskWebSockets(unsigned long aInterval,long aIterations,Scheduler* aS) :  Task(aInterval, aIterations, aS, false){
+taskWebSockets::taskWebSockets(unsigned long aInterval,long aIterations,Scheduler* aS,const char* name,taskJson* jsonTask) :
+ Task(aInterval, aIterations, aS, false),
+ taskInfo(name),
+ m_jsonTask(jsonTask){
   // Start a WebSocket server
   webSocket = new WebSocketsServer(81);
   webSocket->begin();                    // start the webSocketNicolas server

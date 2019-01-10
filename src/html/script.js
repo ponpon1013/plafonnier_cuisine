@@ -22,7 +22,14 @@ connection.onclose = function () {
 
 wifiStatusBouton.addEventListener('click',function(){
     wifiConfigWindow.style.display="block";
-    connection.send("WiFi scan ON");
+    var command2send={
+      command:{
+        order:"WiFiScan",
+        param:"on"
+      }
+    };
+    var json2send=JSON.stringify(command2send);
+    connection.send(json2send);
 });
 
 //closing wifi config windows

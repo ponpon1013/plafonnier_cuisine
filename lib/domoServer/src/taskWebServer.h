@@ -13,10 +13,11 @@
 
 #include <TaskSchedulerDeclarations.h>
 #include "ESP8266WebServer.h"
+#include "taskInfo.h"
 
-class taskWebServer : public Task {
+class taskWebServer : public Task,taskInfo {
 public:
-  taskWebServer(unsigned long ,long ,Scheduler* );
+  taskWebServer(unsigned long ,long ,Scheduler*,const char* );
   ESP8266WebServer *server;
   bool Callback();
   void startServer();

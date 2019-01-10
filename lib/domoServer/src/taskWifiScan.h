@@ -1,14 +1,11 @@
-#ifndef _TASK_WEBSOCKETS_HPP
-#define _TASK_WEBSOCKETS_HPP
+#ifndef _TASK_WIFI_SCAN_HPP
+#define _TASK_WIFI_SCAN_HPP
 
 
-#include <Arduino.h>
+#include "Arduino.h"
 #include <FS.h>
-#include <Hash.h>
-#include <WebSocketsServer.h>
-#include <ArduinoJson.h>
-#include "taskJson.h"
-#include "taskInfo.h"
+#include <ESP8266WiFi.h>
+
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
@@ -17,18 +14,31 @@
 #define _TASK_OO_CALLBACKS // Support for dynamic callback method binding
 #define _TASK_STD_FUNCTION      // pio run -v commandSupport for std::function (ESP8266 ONLY)
 
-
-
 #include <TaskSchedulerDeclarations.h>
+#include "taskInfo.h"
 
-class taskWebSockets : public Task,taskInfo {
+#define SSID_SIZE 32
+#define PASSWD_SIZE 64
+#define MYHOSTNAME_SIZE 32
+#define MAX_WIFI_RECORD 255
+
+struct networkInfo{
+  char ssid[32];
+  int32_t rrsi;
+};
+
+class taskWifiScan : public Task,taskInfo {
 public:
-  WebSocketsServer* webSocket;
-taskWebSockets(unsigned long,long,Scheduler*, const char*,taskJson* );
+bool scanOn;
+taskWifiScan(unsigned long,long,Scheduler*, const char* );
 bool Callback();
-void webSocketEvent(uint8_t , WStype_t , uint8_t * , size_t );
-taskJson* m_jsonTask;
+int numScan;
+struct networkInfo networkAvailable[255];
+
 private:
+int networksFound;
+void prinScanResult(int);
+
 };
 
 

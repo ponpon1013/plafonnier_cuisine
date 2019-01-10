@@ -17,27 +17,27 @@
 /*------------------- library including ------------------*/
 #include <Arduino.h>
 
-/*library for WIFI,FTP server, webserver,
-   websocket and Task Scheduler*/
- //#include <ESP8266WiFi.h>
- //#include <ESP8266WebServer.h>
-// #include <ESP8266mDNS.h>
- //#include <FS.h>
-// #include <ESP8266FtpServer.h>
-// #include <WebSocketsServer.h>
-// #include <ArduinoJson.h>
-
-#define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
+/*#define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
 #define _TASK_WDT_IDS           // Compile with support for wdt control points and task ids
 #define _TASK_PRIORITY          // Support for layered scheduling priority
 #define _TASK_OO_CALLBACKS // Support for dynamic callback method binding
 #define _TASK_STD_FUNCTION      // Support for std::function (ESP8266 ONLY)
-
+*/
 #define DELAY_WIFI_CALLBACK 1000 // 1000 ms
 #define DELAY_FTP_CALLBACK 0 // 1000 ms
+#define DELAY_WEBSOCKETS_CALLBACK 0
+#define DELAY_JSON_CALLBACK 0
+
+#define WIFI_TASK_NAME "WiFi"
+#define WIFISCAN_TASK_NAME "WiFiScan"
+#define WEBSERVER_TASK_NAME "Webserver"
+#define FTP_TASK_NAME "FTP"
+#define WEBSOCKETS_TASK_NAME "WebSockets"
+#define JSON_TASK_NAME "JSON"
 
 #include <TaskSchedulerDeclarations.h>
+//#include "taskInfo.h"
 
 /* classe declaration */
 class domoServer{
@@ -50,9 +50,9 @@ public:
 
 private:
   bool scanOn=false; //flag to say if WIFI scanning is ON or not
-  int numScan=0; // number of wifi network found
   //ESP8266WebServer* server;
 //  WebSocketsServer* webSocket;
+int numScan=0; // number of wifi network found
 //  FtpServer* ftpSrv;
   Scheduler* ts;
   //taskWebServer* server;

@@ -1,0 +1,56 @@
+Processing d1_mini (platform: espressif8266; board: d1_mini; framework: arduino)
+------------------------------------------------------------------------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif8266/d1_mini.html
+PLATFORM: Espressif 8266 > WeMos D1 R2 & mini
+HARDWARE: ESP8266 80MHz 80KB RAM (4MB Flash)
+Library Dependency Finder -> http://bit.ly/configure-pio-ldf
+LDF MODES: FINDER(chain) COMPATIBILITY(soft)
+Collected 37 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- <CircularBuffer> 1.3.0
+|-- <domoServer>
+|   |-- <TaskScheduler> 3.0.2
+|   |-- <CircularBuffer> 1.3.0
+|   |-- <ArduinoJson> 5.13.4
+|   |-- <Hash> 1.0
+|   |-- <ESP8266WiFi> 1.0
+|   |-- <ESP_EEPROM> 2.0.0
+|   |-- <WebSockets> 2.1.2
+|   |   |-- <SPI> 1.0
+|   |   |-- <ESP8266WiFi> 1.0
+|   |   |-- <Hash> 1.0
+|   |   |-- <Ethernet(esp8266)> 1.0.4
+|   |   |   |-- <SPI> 1.0
+|   |-- <ESP8266WebServer> 1.0
+|   |   |-- <ESP8266WiFi> 1.0
+|   |-- <esp8266FTPServer>
+|   |   |-- <ESP8266WiFi> 1.0
+|-- <IRremoteESP8266> 2.5.4
+|-- <TaskScheduler> 3.0.2
+Linking .pioenvs/d1_mini/firmware.elf
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskFtp.cpp.o):(.text._ZN7taskFtpC2EmlP9SchedulerPKc+0x8): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskFtp.cpp.o):(.text._ZN7taskFtpC2EmlP9SchedulerPKc+0x1b): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskFtp.cpp.o):(.rodata._ZTV7taskFtp[vtable for taskFtp]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskFtp.cpp.o):(.rodata._ZTV7taskFtp[vtable for taskFtp]+0x10): undefined reference to `Task::OnDisable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskJson.cpp.o): In function `taskJson::taskJson(unsigned long, long, Scheduler*, char const*)':
+taskJson.cpp:(.text._ZN8taskJsonC2EmlP9SchedulerPKc+0x1b): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskJson.cpp.o):(.rodata._ZTV8taskJson[vtable for taskJson]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskJson.cpp.o):(.rodata._ZTV8taskJson[vtable for taskJson]+0x10): undefined reference to `Task::OnDisable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebServer.cpp.o):(.text._ZN13taskWebServerC2EmlP9SchedulerPKc+0x2b): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebServer.cpp.o):(.rodata._ZTV13taskWebServer[vtable for taskWebServer]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebServer.cpp.o):(.rodata._ZTV13taskWebServer[vtable for taskWebServer]+0x10): undefined reference to `Task::OnDisable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebSockets.cpp.o):(.text._ZN14taskWebSocketsC2EmlP9SchedulerPKcP8taskJson+0x2f): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebSockets.cpp.o):(.rodata._ZTV14taskWebSockets[vtable for taskWebSockets]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWebSockets.cpp.o):(.rodata._ZTV14taskWebSockets[vtable for taskWebSockets]+0x10): undefined reference to `Task::OnDisable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifi.cpp.o):(.text._ZN8taskWifiC2EmlP9SchedulerPKc+0x1b): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifi.cpp.o):(.rodata._ZTV8taskWifi[vtable for taskWifi]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifi.cpp.o):(.rodata._ZTV8taskWifi[vtable for taskWifi]+0x10): undefined reference to `Task::OnDisable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifiScan.cpp.o): In function `taskWifiScan::taskWifiScan(unsigned long, long, Scheduler*, char const*)':
+taskWifiScan.cpp:(.text._ZN12taskWifiScanC2EmlP9SchedulerPKc+0x16): undefined reference to `Task::Task(unsigned long, long, Scheduler*, bool)'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifiScan.cpp.o):(.rodata._ZTV12taskWifiScan[vtable for taskWifiScan]+0xc): undefined reference to `Task::OnEnable()'
+.pioenvs/d1_mini/lib671/libdomoServer.a(taskWifiScan.cpp.o):(.rodata._ZTV12taskWifiScan[vtable for taskWifiScan]+0x10): undefined reference to `Task::OnDisable()'
+collect2: error: ld returned 1 exit status
+*** [.pioenvs/d1_mini/firmware.elf] Error 1
+========================================================== [ERROR] Took 1.77 seconds ==========================================================
