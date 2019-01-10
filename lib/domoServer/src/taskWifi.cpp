@@ -42,9 +42,9 @@ bool getFromEepromWifi(EEConf* tabKnownWifi){
         }
         else{
           #ifdef DEBUG_NICO
-          Serial.printf("found %i records: error\n",nbrWifi);
+                Serial.printf("found %i records: error\n",nbrWifi);
           #endif
-          return false;
+                return false;
         }
 
 }
@@ -75,33 +75,6 @@ void STAmodeSwitch(struct EEConf tabKnownWiFi ){
         WiFi.begin (tabKnownWiFi.ssid,tabKnownWiFi.password);
 }
 
-void taskWifi::prinScanResult(int networksFound){
-        int i;
-/* if wifi network found, they were stored in networkAvailable
-   if recorded network is found, try to connect it */
-   #ifdef DEBUG_NICO
-   Serial.printf("NumScan:%i \n",numScan);
-   #endif
-        if (numScan!=networksFound) {
-                for (i=0; i<networksFound; i++) {
-                        WiFi.SSID(i).toCharArray(networkAvailable[i].ssid,32);
-                        networkAvailable[i].rrsi=WiFi.RSSI(i);
-                        if(!(strcmp(networkAvailable[i].ssid,tabKnownWiFi.ssid))) {
-                                STAmodeSwitch(tabKnownWiFi);
-                        }
-                        #ifdef DEBUG_NICO
-                        Serial.printf("%i. ssid:",i);
-                        Serial.println(networkAvailable[i].ssid);
-                        #endif
-                }
-        }
-}
-
-void taskWifi::scanWifi(){
-        if(scanOn){
-          WiFi.scanNetworksAsync(std::bind(&taskWifi::prinScanResult,this,std::placeholders::_1));
-        }
-}
 
 bool taskWifi::Callback(){
         /* every time callback is launch:
@@ -119,9 +92,6 @@ bool taskWifi::Callback(){
                 {
                         attent=0; // attent is turn at 0
                         // if scan was requested scan is launch
-                        if (scanOn) {
-                                this->scanWifi();
-                        }
                 }
                 else
                 {
@@ -134,19 +104,13 @@ bool taskWifi::Callback(){
                         }
                 }
         }
-        else{
-                // launch Wifi Scan to check if configured weifi server is now availble
-                this->scanWifi();
-                // if available turn in STA mode
-        }
         return true;
 }
 
-taskWifi::taskWifi(unsigned long aInterval,long aIterations,Scheduler* aS) :  Task(aInterval, aIterations, aS, false){
-        isConnect=false;
+taskWifi::taskWifi(unsigned long aInterval,long aIterations,Scheduler* aS,const char* name) :
+  Task(aInterval, aIterations, aS, false),
+  taskInfo(name){
         attent=0;
-        scanOn=false;
-        numScan=0;
         if (getFromEepromWifi(&tabKnownWiFi)) {
                 STAmodeSwitch(tabKnownWiFi);
         }

@@ -1,14 +1,5 @@
-#ifndef _TASK_WEBSOCKETS_HPP
-#define _TASK_WEBSOCKETS_HPP
-
-
-#include <Arduino.h>
-#include <FS.h>
-#include <Hash.h>
-#include <WebSocketsServer.h>
-#include <ArduinoJson.h>
-#include "taskJson.h"
-#include "taskInfo.h"
+#ifndef _TASK_JSON_HPP
+#define _TASK_JSON_HPP
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
@@ -17,19 +8,22 @@
 #define _TASK_OO_CALLBACKS // Support for dynamic callback method binding
 #define _TASK_STD_FUNCTION      // pio run -v commandSupport for std::function (ESP8266 ONLY)
 
+#define JSON_CAPACITY 1000
 
+#include "Arduino.h"
+#include <CircularBuffer.h>
+//#include <TaskSchedulerDeclarations.h>
+#include <ArduinoJson.h>
+#include "taskInfo.h"
 
-#include <TaskSchedulerDeclarations.h>
-
-class taskWebSockets : public Task,taskInfo {
+class taskJson : public Task,taskInfo {
 public:
-  WebSocketsServer* webSocket;
-taskWebSockets(unsigned long,long,Scheduler*, const char*,taskJson* );
+CircularBuffer<String, 100> buffer;
+taskJson(unsigned long,long,Scheduler*,const char* );
 bool Callback();
-void webSocketEvent(uint8_t , WStype_t , uint8_t * , size_t );
-taskJson* m_jsonTask;
+bool addJson(String);
+
 private:
+
 };
-
-
 #endif

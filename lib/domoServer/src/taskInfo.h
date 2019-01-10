@@ -1,8 +1,5 @@
-#ifndef _TASK_WEBSERVER_HPP
-#define _TASK_WEBSERVER_HPP
-
-#include "Arduino.h"
-#include <FS.h>
+#ifndef _TASK_INFO_HPP
+#define _TASK_INFO_HPP
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
@@ -12,20 +9,15 @@
 #define _TASK_STD_FUNCTION      // Support for std::function (ESP8266 ONLY)
 
 #include <TaskSchedulerDeclarations.h>
-#include "ESP8266WebServer.h"
-#include "taskInfo.h"
 
-class taskWebServer : public Task,taskInfo {
+
+class taskInfo{
+
 public:
-  taskWebServer(unsigned long ,long ,Scheduler*,const char* );
-  ESP8266WebServer *server;
-  bool Callback();
-  void startServer();
-private:
-
-  void handleNotFound();
-  bool handleFileRead(String);
+  const char* m_name;
+  void* m_param;
+  taskInfo(const char*);
+  void addParam(void *);
 };
-
 
 #endif

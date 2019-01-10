@@ -11,7 +11,9 @@ void taskFtp::startFTP(){
         }
 }
 
-taskFtp::taskFtp(unsigned long aInterval,long aIterations,Scheduler* aS) :  Task(aInterval, aIterations, aS, false){
+taskFtp::taskFtp(unsigned long aInterval,long aIterations,Scheduler* aS, const char* name) :
+  Task(aInterval, aIterations, aS,false),
+  taskInfo(name){
         this->startFTP();
       #ifdef DEBUG_NICO
         Serial.println("Start FTP server!");

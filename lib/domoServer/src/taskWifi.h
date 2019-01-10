@@ -15,6 +15,7 @@
 #define _TASK_STD_FUNCTION      // pio run -v commandSupport for std::function (ESP8266 ONLY)
 
 #include <TaskSchedulerDeclarations.h>
+#include "taskInfo.h"
 
 #define SSID_SIZE 32
 #define PASSWD_SIZE 64
@@ -37,27 +38,17 @@ struct EEConf {
         char myhostname[32];
 };
 
-struct networkInfo{
-  char ssid[32];
-  int32_t rrsi;
-};
 
-class taskWifi : public Task {
+class taskWifi : public Task,taskInfo {
 public:
 bool isConnect;
-bool scanOn;
-taskWifi(unsigned long,long,Scheduler* );
+taskWifi(unsigned long,long,Scheduler*,const char* );
 bool Callback();
 void startWifi();
-int numScan;
-struct networkInfo networkAvailable[255];
 
 private:
-int networksFound;
 struct EEConf tabKnownWiFi;
 int attent;   // number of attent to know if connexion is lost or not
-void scanWifi();
-void prinScanResult(int);
 };
 
 
