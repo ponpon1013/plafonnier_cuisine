@@ -15,7 +15,7 @@
 #include "ESP8266WebServer.h"
 #include "taskInfo.h"
 
-class taskWebServer : public Task,taskInfo {
+class taskWebServer : public /*virtual Task,*/taskInfo {
 public:
   taskWebServer(unsigned long ,long ,Scheduler*,const char* );
   ESP8266WebServer *server;

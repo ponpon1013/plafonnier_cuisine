@@ -3,6 +3,9 @@
 
 #include "Arduino.h"
 #include <FS.h>
+
+#define FILE_FORMMATTED_FLAG "/formatted.txt"
+
 #include <ESP8266FtpServer.h>
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
@@ -24,7 +27,7 @@
 #endif
 
 
-class taskFtp : public Task,taskInfo {
+class taskFtp : public /*virtual Task,*/taskInfo {
 public:
 taskFtp(unsigned long,long,Scheduler*,const char* );
 bool Callback();

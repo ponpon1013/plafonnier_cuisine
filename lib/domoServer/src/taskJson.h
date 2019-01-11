@@ -16,13 +16,16 @@
 #include <ArduinoJson.h>
 #include "taskInfo.h"
 
-class taskJson : public Task,taskInfo {
+
+
+class taskJson : public /*virtual Task,*/taskInfo {
 public:
 CircularBuffer<String, 100> buffer;
-taskJson(unsigned long,long,Scheduler*,const char* );
+taskJson(unsigned long,long,Scheduler*,const char*,taskInfo** ,int*);
 bool Callback();
 bool addJson(String);
-
+taskInfo **m_tabTask; // table of recorded task
+int* m_sizeTabTask; // ppoint to mtabTask Size
 private:
 
 };

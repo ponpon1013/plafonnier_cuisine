@@ -11,13 +11,14 @@
 #include <TaskSchedulerDeclarations.h>
 
 
-class taskInfo{
+class taskInfo: public Task{
 
 public:
   const char* m_name;
   void* m_param;
-  taskInfo(const char*);
-  void addParam(void *);
+  //taskInfo(const char*);
+  taskInfo(unsigned long,long,Scheduler*,const char* );
+  virtual void addParam(void *);
 };
 
 #endif

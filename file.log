@@ -1,5 +1,5 @@
 Processing d1_mini (platform: espressif8266; board: d1_mini; framework: arduino)
-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 Verbose mode can be enabled via `-v, --verbose` option
 CONFIGURATION: https://docs.platformio.org/page/boards/espressif8266/d1_mini.html
 PLATFORM: Espressif 8266 > WeMos D1 R2 & mini
@@ -10,165 +10,63 @@ Collected 37 compatible libraries
 Scanning dependencies...
 Dependency Graph
 |-- <CircularBuffer> 1.3.0
+|-- <IRremoteESP8266> 2.5.4
 |-- <domoServer>
 |   |-- <CircularBuffer> 1.3.0
+|   |-- <esp8266FTPServer>
+|   |   |-- <ESP8266WiFi> 1.0
+|   |-- <ArduinoJson> 5.13.4
+|   |-- <Hash> 1.0
+|   |-- <ESP8266WiFi> 1.0
+|   |-- <TaskScheduler> 3.0.2
+|   |-- <ESP_EEPROM> 2.0.0
 |   |-- <WebSockets> 2.1.2
 |   |   |-- <SPI> 1.0
 |   |   |-- <ESP8266WiFi> 1.0
 |   |   |-- <Hash> 1.0
 |   |   |-- <Ethernet(esp8266)> 1.0.4
 |   |   |   |-- <SPI> 1.0
-|   |-- <esp8266FTPServer>
-|   |   |-- <ESP8266WiFi> 1.0
-|   |-- <ArduinoJson> 5.13.4
-|   |-- <Hash> 1.0
-|   |-- <TaskScheduler> 3.0.2
-|   |-- <ESP_EEPROM> 2.0.0
-|   |-- <ESP8266WiFi> 1.0
 |   |-- <ESP8266WebServer> 1.0
 |   |   |-- <ESP8266WiFi> 1.0
-|-- <IRremoteESP8266> 2.5.4
 |-- <TaskScheduler> 3.0.2
-Compiling .pioenvs/d1_mini/src/main.cpp.o
-In file included from src/main.cpp:42:0:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:233:1: error: prototype for 'Task::Task(long unsigned int, long int, Scheduler*, bool)' does not match any in class 'Task'
-Task::Task( unsigned long aInterval, long aIterations, Scheduler* aScheduler, bool aEnable ) {
+Compiling .pioenvs/d1_mini/lib671/domoServer/taskWifiScan.cpp.o
+In file included from lib/domoServer/src/taskWifiScan.cpp:1:0:
+lib/domoServer/src/taskWifiScan.h: In constructor 'taskWifiScan::taskWifiScan(long unsigned int, long int, Scheduler*, const char*, WebSocketsServer*)':
+lib/domoServer/src/taskWifiScan.h:46:19: warning: 'taskWifiScan::m_WebSocketsServer' will be initialized after [-Wreorder]
+WebSocketsServer* m_WebSocketsServer;
 ^
-In file included from lib/domoServer/src/domoServer.h:39:0,
-from src/main.cpp:41:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskSchedulerDeclarations.h:126:7: error: candidates are: Task::Task(const Task&)
-class Task {
+lib/domoServer/src/taskWifiScan.h:39:5: warning:   'int taskWifiScan::numScan' [-Wreorder]
+int numScan;
 ^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskSchedulerDeclarations.h:133:12: error:                 Task::Task(long unsigned int, long int, TaskCallback, Scheduler*, bool, TaskOnEnable, TaskOnDisable)
-INLINE Task(unsigned long aInterval=0, long aIterations=0, TaskCallback aCallback=NULL, Scheduler* aScheduler=NULL, bool aEnable=false, TaskOnEnable aOnEnable=NULL, TaskOnDisable aOnDisable=NULL);
+lib/domoServer/src/taskWifiScan.cpp:77:1: warning:   when initialized here [-Wreorder]
+taskWifiScan::taskWifiScan(unsigned long aInterval,long aIterations,Scheduler* aS, const char* name, WebSocketsServer* server) :
 ^
-In file included from src/main.cpp:42:0:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:270:1: error: prototype for 'Task::Task(Scheduler*)' does not match any in class 'Task'
-Task::Task( Scheduler* aScheduler ) {
+In file included from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonSerializer.hpp:7:0,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonPrintable.hpp:12,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../JsonVariantBase.hpp:11,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../JsonVariant.hpp:13,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../JsonBuffer.hpp:12,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/JsonParser.hpp:7,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/JsonBufferBase.hpp:7,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/DynamicJsonBuffer.hpp:7,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson.hpp:9,
+from /home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson.h:9,
+from lib/domoServer/src/taskWifiScan.cpp:2:
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp: In instantiation of 'void ArduinoJson::Internals::JsonWriter<Print>::writeRaw(char) [with Print = char*]':
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp:43:17:   required from 'void ArduinoJson::Internals::JsonWriter<Print>::beginObject() [with Print = char*]'
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonSerializerImpl.hpp:41:3:   required from 'static void ArduinoJson::Internals::JsonSerializer<Writer>::serialize(const ArduinoJson::JsonObject&, Writer&) [with Writer = ArduinoJson::Internals::JsonWriter<char*>]'
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonPrintable.hpp:35:69:   required from 'typename ArduinoJson::Internals::EnableIf<(! ArduinoJson::Internals::StringTraits<TString>::has_append), unsigned int>::type ArduinoJson::Internals::JsonPrintable<T>::printTo(Print&) const [with Print = char*; T = ArduinoJson::JsonObject; typename ArduinoJson::Internals::EnableIf<(! ArduinoJson::Internals::StringTraits<TString>::has_append), unsigned int>::type = unsigned int]'
+lib/domoServer/src/taskWifiScan.cpp:50:38:   required from here
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp:144:13: error: request for member 'print' in '((ArduinoJson::Internals::JsonWriter<char*>*)this)->ArduinoJson::Internals::JsonWriter<char*>::_sink', which is of non-class type 'char*'
+_length += _sink.print(c);
 ^
-In file included from lib/domoServer/src/domoServer.h:39:0,
-from src/main.cpp:41:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskSchedulerDeclarations.h:126:7: error: candidates are: Task::Task(const Task&)
-class Task {
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp: In instantiation of 'void ArduinoJson::Internals::JsonWriter<Print>::writeRaw(const char*) [with Print = char*]':
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp:62:22:   required from 'void ArduinoJson::Internals::JsonWriter<Print>::writeString(const char*) [with Print = char*]'
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonSerializerImpl.hpp:45:5:   required from 'static void ArduinoJson::Internals::JsonSerializer<Writer>::serialize(const ArduinoJson::JsonObject&, Writer&) [with Writer = ArduinoJson::Internals::JsonWriter<char*>]'
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonPrintable.hpp:35:69:   required from 'typename ArduinoJson::Internals::EnableIf<(! ArduinoJson::Internals::StringTraits<TString>::has_append), unsigned int>::type ArduinoJson::Internals::JsonPrintable<T>::printTo(Print&) const [with Print = char*; T = ArduinoJson::JsonObject; typename ArduinoJson::Internals::EnableIf<(! ArduinoJson::Internals::StringTraits<TString>::has_append), unsigned int>::type = unsigned int]'
+lib/domoServer/src/taskWifiScan.cpp:50:38:   required from here
+/home/nicolas/.platformio/lib/ArduinoJson_ID64/src/ArduinoJson/Deserialization/../Serialization/JsonWriter.hpp:141:13: error: request for member 'print' in '((ArduinoJson::Internals::JsonWriter<char*>*)this)->ArduinoJson::Internals::JsonWriter<char*>::_sink', which is of non-class type 'char*'
+_length += _sink.print(s);
 ^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskSchedulerDeclarations.h:133:12: error:                 Task::Task(long unsigned int, long int, TaskCallback, Scheduler*, bool, TaskOnEnable, TaskOnDisable)
-INLINE Task(unsigned long aInterval=0, long aIterations=0, TaskCallback aCallback=NULL, Scheduler* aScheduler=NULL, bool aEnable=false, TaskOnEnable aOnEnable=NULL, TaskOnDisable aOnDisable=NULL);
-^
-In file included from src/main.cpp:42:0:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:287:1: error: 'StatusRequest' does not name a type
-StatusRequest::StatusRequest()
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:293:6: error: 'StatusRequest' has not been declared
-void StatusRequest::setWaiting(unsigned int aCount) { iCount = aCount; iStatus = 0; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'void setWaiting(unsigned int)':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:293:55: error: 'iCount' was not declared in this scope
-void StatusRequest::setWaiting(unsigned int aCount) { iCount = aCount; iStatus = 0; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:293:72: error: 'iStatus' was not declared in this scope
-void StatusRequest::setWaiting(unsigned int aCount) { iCount = aCount; iStatus = 0; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:294:6: error: 'StatusRequest' has not been declared
-bool StatusRequest::pending() { return (iCount != 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool pending()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:294:41: error: 'iCount' was not declared in this scope
-bool StatusRequest::pending() { return (iCount != 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:295:6: error: 'StatusRequest' has not been declared
-bool StatusRequest::completed() { return (iCount == 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool completed()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:295:43: error: 'iCount' was not declared in this scope
-bool StatusRequest::completed() { return (iCount == 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:296:5: error: 'StatusRequest' has not been declared
-int StatusRequest::getStatus() { return iStatus; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'int getStatus()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:296:41: error: 'iStatus' was not declared in this scope
-int StatusRequest::getStatus() { return iStatus; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:297:5: error: 'StatusRequest' has not been declared
-int StatusRequest::getCount() { return iCount; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'int getCount()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:297:40: error: 'iCount' was not declared in this scope
-int StatusRequest::getCount() { return iCount; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:298:1: error: 'StatusRequest' does not name a type
-StatusRequest* Task::getStatusRequest() { return iStatusRequest; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:299:1: error: 'StatusRequest' does not name a type
-StatusRequest* Task::getInternalStatusRequest() { return &iMyStatusRequest; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:306:6: error: 'StatusRequest' has not been declared
-bool StatusRequest::signal(int aStatus) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool signal(int)':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:307:10: error: 'iCount' was not declared in this scope
-if ( iCount) {  // do not update the status request if it was already completed
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:309:15: error: 'iStatus' was not declared in this scope
-if ( (iStatus = aStatus) < 0 ) iCount = 0;   // if an error is reported, the status is requested to be completed immediately
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:311:13: error: 'iCount' was not declared in this scope
-return (iCount == 0);
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:314:6: error: 'StatusRequest' has not been declared
-void StatusRequest::signalComplete(int aStatus) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'void signalComplete(int)':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:315:9: error: 'iCount' was not declared in this scope
-if (iCount) { // do not update the status request if it was already completed
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:317:9: error: 'iStatus' was not declared in this scope
-iStatus = aStatus;
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:325:20: error: variable or field 'waitFor' declared void
-void Task::waitFor(StatusRequest* aStatusRequest, unsigned long aInterval, long aIterations) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:325:20: error: 'StatusRequest' was not declared in this scope
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:325:35: error: 'aStatusRequest' was not declared in this scope
-void Task::waitFor(StatusRequest* aStatusRequest, unsigned long aInterval, long aIterations) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:325:51: error: expected primary-expression before 'unsigned'
-void Task::waitFor(StatusRequest* aStatusRequest, unsigned long aInterval, long aIterations) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:325:76: error: expected primary-expression before 'long'
-void Task::waitFor(StatusRequest* aStatusRequest, unsigned long aInterval, long aIterations) {
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool pending()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:294:55: warning: control reaches end of non-void function [-Wreturn-type]
-bool StatusRequest::pending() { return (iCount != 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool completed()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:295:57: warning: control reaches end of non-void function [-Wreturn-type]
-bool StatusRequest::completed() { return (iCount == 0); }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'int getStatus()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:296:50: warning: control reaches end of non-void function [-Wreturn-type]
-int StatusRequest::getStatus() { return iStatus; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'int getCount()':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:297:48: warning: control reaches end of non-void function [-Wreturn-type]
-int StatusRequest::getCount() { return iCount; }
-^
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: In function 'bool signal(int)':
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:312:1: warning: control reaches end of non-void function [-Wreturn-type]
-}
-^
-In file included from src/main.cpp:42:0:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h: At global scope:
-/home/nicolas/.platformio/lib/TaskScheduler_ID721/src/TaskScheduler.h:218:25: warning: '__task_id_counter' defined but not used [-Wunused-variable]
-static unsigned int __task_id_counter = 0; // global task ID counter for assiging task IDs automatically.
-^
-*** [.pioenvs/d1_mini/src/main.cpp.o] Error 1
-========================================== [ERROR] Took 1.46 seconds ==========================================
+*** [.pioenvs/d1_mini/lib671/domoServer/taskWifiScan.cpp.o] Error 1
+=========================================== [ERROR] Took 1.55 seconds ===========================================

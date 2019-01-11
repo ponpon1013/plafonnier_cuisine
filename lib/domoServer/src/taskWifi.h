@@ -38,8 +38,7 @@ struct EEConf {
         char myhostname[32];
 };
 
-
-class taskWifi : public Task,taskInfo {
+class taskWifi : public /*virtual Task,*/taskInfo {
 public:
 bool isConnect;
 taskWifi(unsigned long,long,Scheduler*,const char* );

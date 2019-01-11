@@ -53,8 +53,7 @@ void taskWebSockets::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payloa
     }
 
 taskWebSockets::taskWebSockets(unsigned long aInterval,long aIterations,Scheduler* aS,const char* name,taskJson* jsonTask) :
- Task(aInterval, aIterations, aS, false),
- taskInfo(name),
+ taskInfo(aInterval, aIterations, aS, /*false)*/name),
  m_jsonTask(jsonTask){
   // Start a WebSocket server
   webSocket = new WebSocketsServer(81);

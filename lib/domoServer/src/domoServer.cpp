@@ -53,8 +53,8 @@ domoServer::domoServer (Scheduler* tsInput){
 
         const char* wifiTaskName=WIFI_TASK_NAME;
         const char* webServerTaskName=WEBSERVER_TASK_NAME;
+        const char* wifiScanTask=WIFISCAN_TASK_NAME;
         /*const char* wifiTask=WIFI_TASK_NAME;
-        const char* wifiTask=WIFI_TASK_NAME;
         const char* wifiTask=WIFI_TASK_NAME;*/
 
         #ifdef DEBUG_NICO
@@ -68,11 +68,15 @@ domoServer::domoServer (Scheduler* tsInput){
         tableTask[0]=new taskWifi(DELAY_WIFI_CALLBACK,TASK_FOREVER,ts,wifiTaskName); // initilaise WIFI
         tableTask[1]=new taskWebServer(0,TASK_FOREVER,ts,webServerTaskName);
         tableTask[2]=new taskFtp(DELAY_FTP_CALLBACK,TASK_FOREVER,ts,"FTP"); // initilaise WIFI
-        tableTask[3]=new taskJson(DELAY_JSON_CALLBACK,TASK_FOREVER,ts,"JSON"); // initilaise WIFI
+        tableTask[3]=new taskJson(DELAY_JSON_CALLBACK,TASK_FOREVER,ts,"JSON",tableTask,&nbrTask); // initilaise WIFI
         tableTask[4]=new taskWebSockets(DELAY_WEBSOCKETS_CALLBACK,TASK_FOREVER,ts,"WebSockets",(taskJson*) tableTask[3]); // initilaise WIFI
-        tableTask[5]=new taskWifiScan(DELAY_WEBSOCKETS_CALLBACK,TASK_FOREVER,ts,"WiFiScan"); //
+        taskWebSockets* taskTemp=(taskWebSockets*)tableTask[4];
+        tableTask[5]=new taskWifiScan(DELAY_WIFISCAN_CALLBACK,TASK_FOREVER,ts,wifiScanTask,taskTemp->webSocket); //
         //tableTask[0]=new Task(0, TASK_FOREVER, &toto,ts,false,NULL,NULL);
         for(i=0; i<nbrTask-1; i++) {
                 tableTask[i]->enable();
         }
+        #ifdef DEBUG_NICO
+          Serial.printf("table_rask:%p\n", tableTask);
+        #endif
 }

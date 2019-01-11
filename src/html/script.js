@@ -1,3 +1,4 @@
+
 // gestion fenetre choix WiFi
 
 // bouton wifi_status
@@ -35,5 +36,12 @@ wifiStatusBouton.addEventListener('click',function(){
 //closing wifi config windows
 function closeWifiConfig(){
   wifiConfigWindow.style.display="none";
-  connection.send("WiFi scan OFF");
+  var command2send={
+    command:{
+      order:"WiFiScan",
+      param:"off"
+    }
+  };
+  var json2send=JSON.stringify(command2send);
+  connection.send(json2send);
 }

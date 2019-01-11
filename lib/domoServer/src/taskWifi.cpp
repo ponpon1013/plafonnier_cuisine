@@ -83,10 +83,10 @@ bool taskWifi::Callback(){
            - already connected ( FLAG isConnect) -> check if always connected.
            - not connected : use scan results to know if configured server is available
          */
-        if (isConnect) {
-                #ifdef DEBUG_NICO
-                Serial.println("IsConnect true");
-                #endif
+
+        WiFiMode_t modeWiFi=WiFi.getMode();
+        switch (modeWiFi) {
+        case WIFI_STA: {
                 if (WiFi.status() == WL_CONNECTED)
                 // WiFi connected to ssid
                 {
@@ -103,13 +103,34 @@ bool taskWifi::Callback(){
                                 APmodeSwicth(); // turn in AP MODE.
                         }
                 }
+                break;
         }
-        return true;
+
+        case WIFI_AP: {
+            #ifdef DEBUG_NICO
+                Serial.println("WiFi AP Mode");
+            #endif
+                break;
+        }
+        case WIFI_AP_STA: {
+          #ifdef DEBUG_NICO
+                Serial.println("WiFi AP+STA Mode");
+          #endif
+                break;
+
+        }
+        case WIFI_OFF: {
+         #ifdef DEBUG_NICO
+                Serial.println("WiFi OFF");
+         #endif
+                break;
+        }
+                return true;
+        }
 }
 
 taskWifi::taskWifi(unsigned long aInterval,long aIterations,Scheduler* aS,const char* name) :
-  Task(aInterval, aIterations, aS, false),
-  taskInfo(name){
+        taskInfo(aInterval, aIterations, aS /* false)*/, name){
         attent=0;
         if (getFromEepromWifi(&tabKnownWiFi)) {
                 STAmodeSwitch(tabKnownWiFi);

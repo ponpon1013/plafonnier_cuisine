@@ -21,7 +21,7 @@
 
 #include <TaskSchedulerDeclarations.h>
 
-class taskWebSockets : public Task,taskInfo {
+class taskWebSockets : public /*virtual Task,*/taskInfo {
 public:
   WebSocketsServer* webSocket;
 taskWebSockets(unsigned long,long,Scheduler*, const char*,taskJson* );
