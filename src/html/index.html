@@ -49,7 +49,7 @@
 <div id="wifi_config">
   <p class="titre en_tete_et_pied">WIFI configuation</p>
   <div id="wifi_available">
-    <input type="radio" name="wifi_selec" id="value1" class="bouton-radio"/>
+    <!--<input type="radio" name="wifi_selec" id="value1" class="bouton-radio"/>
     <label for="value1" class="label-for-check">
       <p>maison</p>
       <svg version="1.1" viewBox="0 0 100 100" id="wifi-value1" preserveAspectRation="xMinyMax meet" class="svg-content-menu">
@@ -153,16 +153,14 @@
           </g>
         </g>
       </svg>
-    </label>
-
-
+    </label>-->
   </div>
-  <p>SSID:</p>
+  <p id="ssidEntry">SSID:</p>
   <p>PASSWORD
-    <input type="password" name="pass">
+    <input id="WiFiPassword" type="password" name="pass">
   </p>
   <p>
-    <input type="button" value="Send">
+    <input type="button" value="Send" onclick="SendWifiConfig();">
     <input type="button" value="Cancel" onclick="closeWifiConfig();">
   </p>
 

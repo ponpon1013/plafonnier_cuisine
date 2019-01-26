@@ -24,7 +24,8 @@ void taskWifiScan::prinScanResult(int networksFound){
           numScan=networksFound;
           DynamicJsonBuffer jsonBuffer;// allocate JSOn buffer
           JsonObject& root=jsonBuffer.createObject();
-          JsonArray& WifiScanresults=root.createNestedArray("WiFiScanResults");
+          root["name"]="WiFiScan";
+          JsonArray& WifiScanresults=root.createNestedArray("param");
 
                 for (i=0; i<networksFound; i++) {
                         //WiFi.SSID(i).toCharArray(networkAvailable[i].ssid,32);
@@ -48,13 +49,18 @@ void taskWifiScan::prinScanResult(int networksFound){
                 root.printTo(Serial);
                 #endif
                 root.printTo(rootJson);
-                m_WebSocketsServer->broadcastTXT(rootJson);
+                //m_WebSocketsServer->broadcastTXT(rootJson);
 
         }
+        m_WebSocketsServer->broadcastTXT(rootJson);
         scanOn=false;
 }
 
-void taskWifiScan::addParam(void *param){
+void taskWifiScan::addParam(String* record){
+  DynamicJsonBuffer jsonBuffer;// allocate JSOn buffer
+  JsonObject& root=jsonBuffer.parseObject(*record);
+  const char* param=root["command"]["param"];
+
   const char* request=(const char*) param;
   scanRequest=(!strcmp(request, "on"))?true:scanRequest;
   scanRequest=(!strcmp(request, "off"))?false:scanRequest;
@@ -77,6 +83,7 @@ bool taskWifiScan::Callback(){
 taskWifiScan::taskWifiScan(unsigned long aInterval,long aIterations,Scheduler* aS, const char* name, WebSocketsServer* server) :
   taskInfo(aInterval, aIterations, aS/* false)*/, name),
   scanOn(false),
+  scanRequest(false),
   numScan(0){
   #ifdef DEBUG_NICO
     Serial.print("m_name WifiScan:");

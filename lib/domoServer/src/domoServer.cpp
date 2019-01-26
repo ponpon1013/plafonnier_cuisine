@@ -5,7 +5,7 @@
 #include "taskWebSockets.h"
 #include "taskJson.h"
 #include "taskWifiScan.h"
-
+#include "taskWifiTryToConnectAP.h"
 
 /*void prinScanResult(int networksFound){
         if (numScan!=networksFound) {
@@ -64,16 +64,17 @@ domoServer::domoServer (Scheduler* tsInput){
         ts->init(); // init of Scheduler
 
 
-        nbrTask=6;
-        tableTask[0]=new taskWifi(DELAY_WIFI_CALLBACK,TASK_FOREVER,ts,wifiTaskName); // initilaise WIFI
-        tableTask[1]=new taskWebServer(0,TASK_FOREVER,ts,webServerTaskName);
-        tableTask[2]=new taskFtp(DELAY_FTP_CALLBACK,TASK_FOREVER,ts,"FTP"); // initilaise WIFI
-        tableTask[3]=new taskJson(DELAY_JSON_CALLBACK,TASK_FOREVER,ts,"JSON",tableTask,&nbrTask); // initilaise WIFI
-        tableTask[4]=new taskWebSockets(DELAY_WEBSOCKETS_CALLBACK,TASK_FOREVER,ts,"WebSockets",(taskJson*) tableTask[3]); // initilaise WIFI
-        taskWebSockets* taskTemp=(taskWebSockets*)tableTask[4];
-        tableTask[5]=new taskWifiScan(DELAY_WIFISCAN_CALLBACK,TASK_FOREVER,ts,wifiScanTask,taskTemp->webSocket); //
-        //tableTask[0]=new Task(0, TASK_FOREVER, &toto,ts,false,NULL,NULL);
-        for(i=0; i<nbrTask-1; i++) {
+        nbrTask=7;
+        tableTask[0]=new taskJson(DELAY_JSON_CALLBACK,TASK_FOREVER,ts,"JSON",tableTask,&nbrTask); // initilaise WIFI
+        tableTask[1]=new taskWebSockets(DELAY_WEBSOCKETS_CALLBACK,TASK_FOREVER,ts,"WebSockets",(taskJson*) tableTask[0]); // initilaise websockets
+        tableTask[2]=new taskWifiScan(DELAY_WIFISCAN_CALLBACK,TASK_FOREVER,ts,wifiScanTask,((taskWebSockets*)tableTask[1])->webSocket); //
+        tableTask[3]=new taskWifi(DELAY_WIFI_CALLBACK,TASK_FOREVER,ts,wifiTaskName,&(((taskWifiScan*) tableTask[2])->scanOn)); // initilaise WIFI
+        tableTask[4]=new taskWebServer(0,TASK_FOREVER,ts,webServerTaskName);
+        tableTask[5]=new taskFtp(DELAY_FTP_CALLBACK,TASK_FOREVER,ts,"FTP"); // initilaise WIFI
+        tableTask[6]=new taskWifiTryToConnectAP(DELAY_WIFI_TRY_CALLBACK,TASK_FOREVER,ts,"taskWifiTryToConnectAP",&(((taskWifi*) tableTask[2])->isConnect)); // initilaise WIFI
+        //taskWebSockets* taskTemp=(taskWebSockets*)tableTask[4];
+
+        for(i=0; i<nbrTask; i++) {
                 tableTask[i]->enable();
         }
         #ifdef DEBUG_NICO

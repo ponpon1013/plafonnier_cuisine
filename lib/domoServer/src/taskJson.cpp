@@ -15,12 +15,10 @@ bool taskJson::Callback(){
     }
     else{
       const char* order=root["command"]["order"];
-      const char* param=root["command"]["param"];
+
       #ifdef DEBUG_NICO
       Serial.print("order:");
       Serial.println(order);
-      Serial.print("param:");
-      Serial.println(param);
       #endif
       int i;
       #ifdef DEBUG_NICO
@@ -34,7 +32,7 @@ bool taskJson::Callback(){
           #ifdef DEBUG_NICO
           Serial.println("order found");
           #endif
-          m_tabTask[i]->addParam((void*)param);
+          m_tabTask[i]->addParam(&record);
           if (!m_tabTask[i]->isEnabled()){
             m_tabTask[i]->enable();
           }

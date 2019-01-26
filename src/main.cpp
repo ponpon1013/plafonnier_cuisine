@@ -46,6 +46,7 @@ domoServer* domo;
 
 void setup() {
 /*----------------- DEBUG_NICO Serial print -------------------*/
+        Serial.setDebugOutput(false);
         #ifdef DEBUG_NICO
         Serial.begin(115200);
         Serial.println("bonjour");

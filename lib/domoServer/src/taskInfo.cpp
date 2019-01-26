@@ -1,6 +1,6 @@
 #include "taskInfo.h"
 
-void taskInfo::addParam(void* param){
+void taskInfo::addParam(String* param){
   m_param=param;
 }
 

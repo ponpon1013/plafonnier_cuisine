@@ -24,8 +24,9 @@
 #define _TASK_OO_CALLBACKS // Support for dynamic callback method binding
 #define _TASK_STD_FUNCTION      // Support for std::function (ESP8266 ONLY)
 */
-#define DELAY_WIFI_CALLBACK 1000 // 1000 ms
-#define DELAY_FTP_CALLBACK 0 // 1000 ms
+#define DELAY_WIFI_CALLBACK 2000 // 2 s
+#define DELAY_WIFISCAN_CALLBACK 10000 // 10 s
+#define DELAY_FTP_CALLBACK 0 // 0 ms
 #define DELAY_WEBSOCKETS_CALLBACK 0
 #define DELAY_JSON_CALLBACK 0
 

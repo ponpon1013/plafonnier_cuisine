@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include <FS.h>
 #include <ESP8266WiFi.h>
-
+#include <ArduinoJson.h>
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between tasks if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
@@ -16,6 +16,7 @@
 
 #include <TaskSchedulerDeclarations.h>
 #include "taskInfo.h"
+#include "taskWifiScan.h"
 
 #define SSID_SIZE 32
 #define PASSWD_SIZE 64
@@ -41,13 +42,23 @@ struct EEConf {
 class taskWifi : public /*virtual Task,*/taskInfo {
 public:
 bool isConnect;
-taskWifi(unsigned long,long,Scheduler*,const char* );
+taskWifi(unsigned long,long,Scheduler*,const char*,bool*  );
 bool Callback();
 void startWifi();
-
+void addParam(String*);
 private:
 struct EEConf tabKnownWiFi;
 int attent;   // number of attent to know if connexion is lost or not
+bool getNewParam; // true when param changes
+//void STAmodeSwitch();
+bool* m_scanOn;
+//WiFiEventHandler stationConnectedHandler;
+void onConnected();
+//taskWifiScan* m_TaskWifiScan;
+int32_t m_channel;
+WiFiEventHandler disconnectedEventHandler,connectedEventHandler;
+void onDisconnect (const WiFiEventStationModeDisconnected&);
+void onConnect (const WiFiEventStationModeConnected&);
 };
 
 

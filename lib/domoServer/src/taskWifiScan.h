@@ -42,7 +42,7 @@ int numScan;
 private:
 int networksFound;
 void prinScanResult(int);
-virtual void addParam(void *);
+virtual void addParam(String*);
 WebSocketsServer* m_WebSocketsServer;
 int numSockets; // Websockets number to answer
 };
